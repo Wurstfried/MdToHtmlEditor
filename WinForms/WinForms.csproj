@@ -135,15 +135,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\editor.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\viewer.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\style.css" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -156,6 +147,6 @@
   </Target>
   <Import Project="..\packages\CefSharp.Common.87.1.132\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.87.1.132\build\CefSharp.Common.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(ProjectDir)Resources" "$(TargetDir)Resources" /S /Y</PostBuildEvent>
+    <PostBuildEvent>XCOPY "$(SolutionDir)Resources" "$(TargetDir)Resources" /S /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>
