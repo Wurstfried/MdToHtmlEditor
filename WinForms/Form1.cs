@@ -23,6 +23,19 @@ namespace TestMonacoForms
             splitView.Panel1.Controls.Add(editor);
             splitView.Panel2.Controls.Add(viewer);
 
+            theme.SelectedValue = "vs-dark";
+
+            var themes = new Dictionary<string, string>
+            {
+              {"Dark", "vs-dark"},
+              {"Light", "vs"},
+              {"High contrast", "hc-black"}
+            };
+            theme.DataSource = new BindingSource(themes, null);
+            theme.DisplayMember = "Key";
+            theme.ValueMember = "Value";
+
+
             timer.Elapsed += renderMD;
         }
 
@@ -91,6 +104,17 @@ namespace TestMonacoForms
                     viewer.GetBrowser().MainFrame.EvaluateScriptAsync(script);
                 }
             });
+        }
+
+        private void theme_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedTheme = (sender as ComboBox).SelectedValue;
+            var script = $"monaco.editor.setTheme('{selectedTheme}')";
+
+            if(!editor.IsBrowserInitialized) return;
+            if(!viewer.IsBrowserInitialized) return;
+            editor.GetBrowser().MainFrame.EvaluateScriptAsync(script);
+            viewer.GetBrowser().MainFrame.EvaluateScriptAsync(script);
         }
     }
 }
