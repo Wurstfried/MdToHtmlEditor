@@ -157,7 +157,8 @@
   </Target>
   <Import Project="..\packages\CefSharp.Common.87.1.132\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.87.1.132\build\CefSharp.Common.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(SolutionDir)Resources" "$(TargetDir)Resources" /S /Y</PostBuildEvent>
+    <PostBuildEvent>XCOPY "$(SolutionDir)Resources\node_modules\monaco-editor\min\*" "$(TargetDir)Resources\node_modules\monaco-editor\min" /S /Y /I
+XCOPY "$(SolutionDir)Resources" "$(TargetDir)Resources" /Y /I</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.705.50\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.705.50\build\Microsoft.Web.WebView2.targets')" />
 </Project>
