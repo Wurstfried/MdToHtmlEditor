@@ -10,7 +10,7 @@
     <Grid>
         <DockPanel>
             <wv2:WebView2 Name="webView"
-                  Source="https://www.microsoft.com"
+                  Source="http://127.0.0.1:5500/main.html" Loaded="webView_Loaded" NavigationCompleted="webView_NavigationCompleted"
             />
         </DockPanel>
     </Grid>
