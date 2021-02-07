@@ -1,0 +1,33 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>monaco editor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="node_modules/monaco-editor/min/vs/editor/editor.main.css">
+</head>
+<body>
+    <div id="container"></div>
+    <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
+
+    <script>
+        // Based on https://jsfiddle.net/developit/bwgkr6uq/ which just works but is based on unpkg.com.
+        // Provided by loader.js.
+
+        var editor;
+
+        require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs' }});
+        require(["vs/editor/editor.main"], function () {
+            editor = monaco.editor.create(document.getElementById('container'), {
+                value: `# Hello there
+This is a paragraph.
+`,
+                language: 'markdown',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
+
+        });
+    </script>
+</body>
+</html>
