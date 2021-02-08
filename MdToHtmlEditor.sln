@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf", "Wpf\Wpf.csproj", "{34C3EFD4-2B31-4BB3-A7FD-D06A66C525E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wpf", "Wpf\Wpf.csproj", "{34C3EFD4-2B31-4BB3-A7FD-D06A66C525E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaUI", "AvaloniaUI\AvaloniaUI.csproj", "{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,14 @@ Global
 		{34C3EFD4-2B31-4BB3-A7FD-D06A66C525E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34C3EFD4-2B31-4BB3-A7FD-D06A66C525E5}.Release|x64.ActiveCfg = Release|Any CPU
 		{34C3EFD4-2B31-4BB3-A7FD-D06A66C525E5}.Release|x64.Build.0 = Release|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Debug|x64.Build.0 = Debug|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Release|x64.ActiveCfg = Release|Any CPU
+		{BEF3E6C8-F8E8-4659-89ED-327CC0219D66}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
