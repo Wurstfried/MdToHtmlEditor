@@ -8,10 +8,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <DockPanel>
-            <wv2:WebView2 Name="webView"
-                  Source="http://127.0.0.1:5500/main.html" Loaded="webView_Loaded" NavigationCompleted="webView_NavigationCompleted"
+            <wv2:WebView2 Name="editor"
+                  Source="D:\Sources\Monaco\main.html" Loaded="editor_Loaded" NavigationCompleted="editor_NavigationCompleted"
             />
+        </DockPanel>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+        <DockPanel Grid.Column="2">
+            <wv2:WebView2 Name="htmlView"
+                      Source="http://google.com" Loaded="htmlView_Loaded"
+                />
         </DockPanel>
     </Grid>
 </Window>

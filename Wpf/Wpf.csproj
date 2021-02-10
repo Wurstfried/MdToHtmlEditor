@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.23.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.705.50" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY &quot;$(SolutionDir)Resources\node_modules\monaco-editor\min\*&quot; &quot;$(TargetDir)Resources\node_modules\monaco-editor\min&quot; /S /Y /I&#xD;&#xA;XCOPY &quot;$(SolutionDir)Resources&quot; &quot;$(TargetDir)Resources&quot; /Y /I" />
+  </Target>
 
 </Project>

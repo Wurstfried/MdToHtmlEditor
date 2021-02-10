@@ -1,18 +1,10 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using Markdig;
+using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Timers;
+using System.Web;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Wpf
 {
@@ -24,50 +16,62 @@ namespace Wpf
         public MainWindow()
         {
             InitializeComponent();
-            //webView.NavigationStarting += EnsureHttps;
             InitializeAsync();
         }
 
         async void InitializeAsync()
         {
-            await webView.EnsureCoreWebView2Async(null);
-            webView.CoreWebView2.WebMessageReceived += UpdateHtml;
-
-            
-            
+            await editor.EnsureCoreWebView2Async(null);
+            editor.CoreWebView2.WebMessageReceived += UserTyped;
+            timer.Elapsed += renderMD;
         }
 
-        void UpdateHtml(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        private async void renderMD(object sender, ElapsedEventArgs e)
         {
-            // Do the timer stuff
+            timer.Stop();
 
-
-            String uri = args.TryGetWebMessageAsString();
-            //addressBar.Text = uri;
-            webView.CoreWebView2.PostWebMessageAsString(uri);
-
-            //await webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync("window.chrome.webview.postMessage(window.document.URL);");
-        }
-
-        void EnsureHttps(object sender, CoreWebView2NavigationStartingEventArgs args)
-        {
-            
-
-            string uri = args.Uri;
-            if (!uri.StartsWith("https://"))
+            await Dispatcher.Invoke(async () =>
             {
-                args.Cancel = true;
-            }
+                 if (lastMD == currentMD) return;
+                 lastMD = currentMD;
+
+                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+                 var html = Markdown.ToHtml(currentMD, pipeline);
+
+                 var script = $"editor.getModel().setValue('{HttpUtility.JavaScriptStringEncode(html)}')";
+                 await htmlView.ExecuteScriptAsync(script);
+            });
         }
 
-        private async void webView_Loaded(object sender, RoutedEventArgs e)
+        private Timer timer = new Timer(250);
+        private string dirExec = System.IO.Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+        private string lastMD = "";
+        private string currentMD = "";
+
+        void UserTyped(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            //await webView.CoreWebView2.ExecuteScriptAsync(@"window.document.body.onkeyup = function(){window.chrome.webview.postMessage(window.document.URL)}");
+            timer.Stop();
+            timer.Start();
+
+            currentMD = args.TryGetWebMessageAsString();
         }
 
-        private async void webView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        private void editor_Loaded(object sender, RoutedEventArgs e)
         {
-            await webView.CoreWebView2.ExecuteScriptAsync(@"window.document.body.onkeyup = function(){window.chrome.webview.postMessage(window.document.URL)}");
+            //var pathEditor = System.IO.Path.Combine(dirExec, "Resources", "editor.html");
+            //editor.Source = new Uri(pathEditor);
+        }
+
+        private void htmlView_Loaded(object sender, RoutedEventArgs e)
+        {
+            var pathViewer = System.IO.Path.Combine(dirExec, "Resources", "viewer.html");
+            htmlView.Source = new Uri(pathViewer);
+        }
+
+
+        private async void editor_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        {
+            await editor.CoreWebView2.ExecuteScriptAsync(@"window.document.body.onkeyup = function(){window.chrome.webview.postMessage(editor.getValue())}");
 
         }
     }
