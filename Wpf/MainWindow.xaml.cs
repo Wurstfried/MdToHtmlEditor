@@ -24,6 +24,11 @@ namespace Wpf
             await editor.EnsureCoreWebView2Async(null);
             editor.CoreWebView2.WebMessageReceived += UserTyped;
             timer.Elapsed += renderMD;
+
+            var pathViewer = System.IO.Path.Combine(dirExec, "Resources", "viewer.html");
+            var pathEditor = System.IO.Path.Combine(dirExec, "Resources", "editor.html");
+            viewer.Source = new Uri(pathViewer);
+            editor.Source = new Uri(pathEditor);
         }
 
         private async void renderMD(object sender, ElapsedEventArgs e)
@@ -39,7 +44,7 @@ namespace Wpf
                  var html = Markdown.ToHtml(currentMD, pipeline);
 
                  var script = $"editor.getModel().setValue('{HttpUtility.JavaScriptStringEncode(html)}')";
-                 await htmlView.ExecuteScriptAsync(script);
+                 await viewer.ExecuteScriptAsync(script);
             });
         }
 
@@ -56,23 +61,9 @@ namespace Wpf
             currentMD = args.TryGetWebMessageAsString();
         }
 
-        private void editor_Loaded(object sender, RoutedEventArgs e)
-        {
-            //var pathEditor = System.IO.Path.Combine(dirExec, "Resources", "editor.html");
-            //editor.Source = new Uri(pathEditor);
-        }
-
-        private void htmlView_Loaded(object sender, RoutedEventArgs e)
-        {
-            var pathViewer = System.IO.Path.Combine(dirExec, "Resources", "viewer.html");
-            htmlView.Source = new Uri(pathViewer);
-        }
-
-
         private async void editor_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
-            await editor.CoreWebView2.ExecuteScriptAsync(@"window.document.body.onkeyup = function(){window.chrome.webview.postMessage(editor.getValue())}");
-
+            await editor.CoreWebView2.ExecuteScriptAsync(@"document.body.onkeyup = function(){chrome.webview.postMessage(editor.getValue())}; document.body.onkeyup();");
         }
     }
 }

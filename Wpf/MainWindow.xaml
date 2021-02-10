@@ -15,13 +15,13 @@
         </Grid.ColumnDefinitions>
         <DockPanel>
             <wv2:WebView2 Name="editor"
-                  Source="D:\Sources\Monaco\main.html" Loaded="editor_Loaded" NavigationCompleted="editor_NavigationCompleted"
+                  Source="pack://application:,,,/Resources/editor.html"  NavigationCompleted="editor_NavigationCompleted"
             />
         </DockPanel>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
         <DockPanel Grid.Column="2">
-            <wv2:WebView2 Name="htmlView"
-                      Source="http://google.com" Loaded="htmlView_Loaded"
+            <wv2:WebView2 Name="viewer"
+                      Source="http://google.com"
                 />
         </DockPanel>
     </Grid>

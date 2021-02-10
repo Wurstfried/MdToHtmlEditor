@@ -19,8 +19,11 @@
         require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs' }});
         require(["vs/editor/editor.main"], function () {
             editor = monaco.editor.create(document.getElementById('container'), {
-                value: `# Hello there
-This is a paragraph.
+                value: `# Write markdown
+In this editor
+
+## And see the resulting HTML
+on the right 👉
 `,
                 language: 'markdown',
                 theme: 'vs-dark',
